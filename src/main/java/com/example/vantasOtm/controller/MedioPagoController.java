@@ -28,7 +28,7 @@ public class MedioPagoController {
 
         //comprobar si se envian los datos necesarios
         if(medioPago.getMedioPago().equals("")){
-            throw new RequestException("P-401", HttpStatus.INTERNAL_SERVER_ERROR,"Datos faltantes");
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Datos faltantes");
         }
 
         return medioPagoService.saveMedioPago(medioPago);
@@ -39,7 +39,7 @@ public class MedioPagoController {
 
         //comprobar si existe la entidad
         if(!medioPagoRepository.existsById(id)){
-            throw new RequestException("P-401", HttpStatus.INTERNAL_SERVER_ERROR,"Entidad no existe");
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
 
         return medioPagoService.getMedioPago(id);
@@ -55,7 +55,7 @@ public class MedioPagoController {
 
         //comprobar si existe la entidad
         if(!medioPagoRepository.existsById(id)){
-            throw new RequestException("P-401", HttpStatus.INTERNAL_SERVER_ERROR,"Entidad no existe");
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
 
         medioPagoService.deleteMedioPago(id);
@@ -67,12 +67,12 @@ public class MedioPagoController {
 
         //comprobar si existe la entidad
         if(!medioPagoRepository.existsById(medioPago.getId())){
-            throw new RequestException("P-401", HttpStatus.INTERNAL_SERVER_ERROR,"Entidad no existe");
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
 
         //comprobar si se envian los datos necesarios
         if(medioPago.getMedioPago().equals("")){
-            throw new RequestException("P-401", HttpStatus.INTERNAL_SERVER_ERROR,"Datos faltantes");
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Datos faltantes");
         }
 
         medioPagoService.saveMedioPago(medioPago);
