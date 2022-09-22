@@ -90,7 +90,7 @@ public class TipoPagoController {
 
 
     @PutMapping("/edit")
-    public ResponseEntity<TipoPago> deleteTipoPago(@RequestBody TipoPago tipoPago ){
+    public ResponseEntity<TipoPago> editTipoPago(@RequestBody TipoPago tipoPago ){
         ResponseEntity<TipoPago> response;
 
         //comprobar si existe la entidad

@@ -16,7 +16,7 @@ public class Producto {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "productosCliente")
-    private Set<Cliente> clientesProducto;
+    public Set<Cliente> clientesProducto;
 
 
     @JsonIgnore
@@ -27,4 +27,56 @@ public class Producto {
 
     public Producto() {
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public Set<Cliente> getClientesProducto() {
+        return clientesProducto;
+    }
+
+    public void setClientesProducto(Set<Cliente> clientesProducto) {
+        this.clientesProducto = clientesProducto;
+    }
+
+    public Set<Pago> getPagosProducto() {
+        return pagosProducto;
+    }
+
+    public void setPagosProducto(Set<Pago> pagosProducto) {
+        this.pagosProducto = pagosProducto;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                ", clientesProducto=" + clientesProducto +
+                ", pagosProducto=" + pagosProducto +
+                '}';
+    }
 }
+

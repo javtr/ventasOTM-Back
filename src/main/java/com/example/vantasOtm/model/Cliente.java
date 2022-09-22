@@ -18,7 +18,7 @@ public class Cliente {
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
-    Set<Producto> productosCliente;
+    public Set<Producto> productosCliente;
 
 
     public Cliente() {

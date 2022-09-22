@@ -63,7 +63,7 @@ public class MedioPagoController {
     }
 
     @PutMapping("/edit")
-    public MedioPago deleteMedioPago(@RequestBody MedioPago medioPago ){
+    public MedioPago editMedioPago(@RequestBody MedioPago medioPago ){
 
         //comprobar si existe la entidad
         if(!medioPagoRepository.existsById(medioPago.getId())){

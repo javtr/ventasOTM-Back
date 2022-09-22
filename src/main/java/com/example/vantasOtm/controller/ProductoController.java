@@ -3,11 +3,10 @@ package com.example.vantasOtm.controller;
 import com.example.vantasOtm.exception.RequestException;
 import com.example.vantasOtm.model.Cliente;
 import com.example.vantasOtm.model.Producto;
-import com.example.vantasOtm.model.TipoPago;
 import com.example.vantasOtm.repository.ClienteRepository;
-import com.example.vantasOtm.repository.TipoPagoRepository;
+import com.example.vantasOtm.repository.ProductoRepository;
 import com.example.vantasOtm.service.ClienteService;
-import com.example.vantasOtm.service.TipoPagoService;
+import com.example.vantasOtm.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,28 +16,30 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/producto")
 @CrossOrigin
-public class ClienteController {
+public class ProductoController {
 
     @Autowired
-    private ClienteService clienteService;
+    private ProductoService productoService;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ProductoRepository productoRepository;
 
 
     @PostMapping("/save")
-        public ResponseEntity<Cliente> add(@RequestBody Cliente cliente){
-        ResponseEntity<Cliente> response;
+        public ResponseEntity<Producto> add(@RequestBody Producto producto){
+        ResponseEntity<Producto> response;
+
+        System.out.println(producto);
 
         //comprobar si se envian los datos necesarios
-        if(cliente.getNombre().equals("")){
+        if(producto.getNombre().equals("")){
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"nombre faltante");
-        }else if(cliente.getCorreo().equals("")){
-            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"correo faltante");
+        }else if(producto.getPrecio()==0){
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"precio faltante");
         }else {
-            response = ResponseEntity.ok(clienteService.saveCliente(cliente)) ;
+            response = ResponseEntity.ok(productoService.saveProducto(producto)) ;
         }
 
         return response;
@@ -46,12 +47,12 @@ public class ClienteController {
 
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Cliente> getCliente(@PathVariable Integer id ){
-        ResponseEntity<Cliente> response;
+    public ResponseEntity<Producto> getCliente(@PathVariable Integer id ){
+        ResponseEntity<Producto> response;
 
         //comprobar si existe la entidad
-        if(clienteRepository.existsById(id)){
-            response = ResponseEntity.ok(clienteService.getCliente(id)) ;
+        if(productoRepository.existsById(id)){
+            response = ResponseEntity.ok(productoService.getProducto(id)) ;
         }else{
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
@@ -61,8 +62,8 @@ public class ClienteController {
 
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<Cliente>> getAllCliente(){
-        return ResponseEntity.ok(clienteService.getAllClientes()) ;
+    public ResponseEntity<List<Producto>> getAllCliente(){
+        return ResponseEntity.ok(productoService.getAllProducto()) ;
     }
 
 
@@ -72,15 +73,15 @@ public class ClienteController {
         ResponseEntity<String> response;
 
         //comprobar si existe la entidad
-        if(clienteRepository.existsById(id)){
-            clienteService.deleteClientes(id);
+        if(productoRepository.existsById(id)){
+            productoService.deleteProducto(id);
         }
         else{
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
 
         //comprobar si se elimino la entidad
-        if(!clienteRepository.existsById(id)){
+        if(!productoRepository.existsById(id)){
             response = ResponseEntity.status(HttpStatus.OK).body("Entidad eliminada");
         }else{
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"La entidad no se elimino");
@@ -90,38 +91,38 @@ public class ClienteController {
     }
 
 
-
-
-
     @PutMapping("/edit")
-    public ResponseEntity<Cliente> editTipoPago(@RequestBody Cliente cliente ){
-        ResponseEntity<Cliente> response;
+    public ResponseEntity<Producto> editTipoPago(@RequestBody Producto producto ){
+        ResponseEntity<Producto> response;
 
         //comprobar si existe la entidad
-        if(!clienteRepository.existsById(cliente.getId())){
+        if(!productoRepository.existsById(producto.getId())){
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
 
         //comprobar si se envian los datos necesarios
-        if(cliente.getNombre().equals("")){
+        if(producto.getNombre().equals("")){
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"nombre faltante");
-        }else if(cliente.getCorreo().equals("")){
+        }else if(producto.getPrecio()==0){
             throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"correo faltante");
         }
 
-        return ResponseEntity.ok(clienteService.saveCliente(cliente)) ;
+        return ResponseEntity.ok(productoService.saveProducto(producto)) ;
     }
 
-    @GetMapping("/productos/{id}")
-    public ResponseEntity<Set<Producto>> getSetProductos(@PathVariable Integer id ){
+
+    @GetMapping("/clientes/{id}")
+    public ResponseEntity<Set<Cliente>> getProductoClientes(@PathVariable Integer id ){
 
         //comprobar si existe la entidad
-        if(!clienteRepository.existsById(id)){
-            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Cliente no existe");
+        if(!productoRepository.existsById(id)){
+            throw new RequestException("P-401", HttpStatus.BAD_REQUEST,"Entidad no existe");
         }
 
-        return ResponseEntity.ok(clienteService.getCliente(id).getProductosCliente()) ;
+        return ResponseEntity.ok(productoService.getProducto(id).getClientesProducto()) ;
     }
+
+
 
 
 }
